@@ -23,8 +23,7 @@
   .day{color:#fff;font-size:12px;font-weight:400;}
   .competition-logo{width:16px;height:16px;object-fit:contain;}
 </style>
-</head>
-<body>
+</head><body>
 <div class="widget">
   <div class="countdown">
     <div class="cd-block"><div class="label">days</div><div class="value" id="days">0</div></div>
@@ -34,187 +33,65 @@
   </div>
   <div class="main">
     <div class="logos">
-      <img id="home-logo" src="" alt="Home Team" onerror="this.src=defaultCrest"/>
+      <img id="home-logo" src="https://crests.football-data.org/81.png" alt="FC Barcelona"/>
       <div class="vs" style="font-weight:400;">v</div>
-      <img id="away-logo" src="https://seeklogo.com/images/F/fc-barcelona-logo-8B08C9A75E-seeklogo.com.png" alt="FC Barcelona" onerror="this.src=defaultCrest"/>
+      <img id="away-logo" src="https://banner2.cleanpng.com/20180717/bxc/kisspng-fc-seoul-suwon-samsung-bluewings-jeju-united-fc-ga-lotto-logo-5b4dfec666c726.359798791531838150421.jpg" alt="FC Seoul"/>
     </div>
-    <div class="info" id="match-info">Loading...</div>
+    <div class="info" id="match-info">
+      31 July 2025 · 13:00 CEST · Seoul World Cup Stadium · Asia Tour Friendly
+    </div>
   </div>
-  <div class="opponents" id="upcoming-fixtures"></div>
+  <div class="opponents">
+    <div class="opponent-box away">
+      <img class="crest" src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Daegu_FC.svg/1200px-Daegu_FC.svg.png" alt="Daegu"/>
+      <div class="bottom-strip">
+        <div class="day">03</div>
+        <img class="competition-logo" src="https://logoeps.com/wp-content/uploads/2025/02/la_liga-logo.png" alt="LaLiga"/>
+      </div>
+    </div>
+    <div class="opponent-box home">
+      <img class="crest" src="https://crests.football-data.org/89.png" alt="Mallorca"/>
+      <div class="bottom-strip">
+        <div class="day">10</div>
+        <img class="competition-logo" src="https://logoeps.com/wp-content/uploads/2025/02/la_liga-logo.png" alt="LaLiga"/>
+      </div>
+    </div>
+    <div class="opponent-box away">
+      <img class="crest" src="https://crests.football-data.org/88.svg" alt="Levante"/>
+      <div class="bottom-strip">
+        <div class="day">17</div>
+        <img class="competition-logo" src="https://logoeps.com/wp-content/uploads/2025/02/la_liga-logo.png" alt="LaLiga"/>
+      </div>
+    </div>
+    <div class="opponent-box home">
+      <img class="crest" src="https://crests.football-data.org/92.png" alt="Rayo"/>
+      <div class="bottom-strip">
+        <div class="day">21</div>
+        <img class="competition-logo" src="https://logoeps.com/wp-content/uploads/2025/02/la_liga-logo.png" alt="LaLiga"/>
+      </div>
+    </div>
+    <div class="opponent-box away">
+      <img class="crest" src="https://crests.football-data.org/90.png" alt="Espanyol"/>
+      <div class="bottom-strip">
+        <div class="day">28</div>
+        <img class="competition-logo" src="https://logoeps.com/wp-content/uploads/2025/02/la_liga-logo.png" alt="LaLiga"/>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
-const defaultCrest = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Font_Awesome_5_solid_shield-alt.svg/1024px-Font_Awesome_5_solid_shield-alt.svg.png';
-const API_URL = "https://corsproxy.io/?https://www.thesportsdb.com/api/v1/json/1/eventsnext.php?id=133739";
-
-const fallbackFixtures = [
-  {
-    idEvent: '1',
-    strHomeTeam: 'Barcelona',
-    strAwayTeam: 'Real Madrid',
-    dateEvent: new Date(Date.now() + 86400000).toISOString().slice(0,10), // tomorrow
-    strTime: '20:00:00',
-    strHomeTeamBadge: 'https://seeklogo.com/images/F/fc-barcelona-logo-8B08C9A75E-seeklogo.com.png',
-    strAwayTeamBadge: 'https://seeklogo.com/images/R/real-madrid-logo-0689F05C18-seeklogo.com.png',
-    strVenue: 'Camp Nou',
-    strLeague: 'La Liga',
-  },
-  {
-    idEvent: '2',
-    strHomeTeam: 'Atletico Madrid',
-    strAwayTeam: 'Barcelona',
-    dateEvent: new Date(Date.now() + 3*86400000).toISOString().slice(0,10),
-    strTime: '18:30:00',
-    strHomeTeamBadge: 'https://seeklogo.com/images/A/atletico-madrid-logo-71C1D10E47-seeklogo.com.png',
-    strAwayTeamBadge: 'https://seeklogo.com/images/F/fc-barcelona-logo-8B08C9A75E-seeklogo.com.png',
-    strVenue: 'Wanda Metropolitano',
-    strLeague: 'La Liga',
-  },
-  {
-    idEvent: '3',
-    strHomeTeam: 'Barcelona',
-    strAwayTeam: 'Chelsea',
-    dateEvent: new Date(Date.now() + 5*86400000).toISOString().slice(0,10),
-    strTime: '21:00:00',
-    strHomeTeamBadge: 'https://seeklogo.com/images/F/fc-barcelona-logo-8B08C9A75E-seeklogo.com.png',
-    strAwayTeamBadge: 'https://seeklogo.com/images/C/chelsea-logo-8C9B625371-seeklogo.com.png',
-    strVenue: 'Camp Nou',
-    strLeague: 'Champions League',
-  },
-  {
-    idEvent: '4',
-    strHomeTeam: 'Bayern Munich',
-    strAwayTeam: 'Barcelona',
-    dateEvent: new Date(Date.now() + 7*86400000).toISOString().slice(0,10),
-    strTime: '20:45:00',
-    strHomeTeamBadge: 'https://seeklogo.com/images/B/bayern-munich-logo-DFE66A0C20-seeklogo.com.png',
-    strAwayTeamBadge: 'https://seeklogo.com/images/F/fc-barcelona-logo-8B08C9A75E-seeklogo.com.png',
-    strVenue: 'Allianz Arena',
-    strLeague: 'Champions League',
-  },
-  {
-    idEvent: '5',
-    strHomeTeam: 'Barcelona',
-    strAwayTeam: 'Valencia',
-    dateEvent: new Date(Date.now() + 9*86400000).toISOString().slice(0,10),
-    strTime: '19:00:00',
-    strHomeTeamBadge: 'https://seeklogo.com/images/F/fc-barcelona-logo-8B08C9A75E-seeklogo.com.png',
-    strAwayTeamBadge: 'https://seeklogo.com/images/V/valencia-logo-1F1177F5C7-seeklogo.com.png',
-    strVenue: 'Camp Nou',
-    strLeague: 'La Liga',
-  },
-  {
-    idEvent: '6',
-    strHomeTeam: 'Sevilla',
-    strAwayTeam: 'Barcelona',
-    dateEvent: new Date(Date.now() + 11*86400000).toISOString().slice(0,10),
-    strTime: '18:00:00',
-    strHomeTeamBadge: 'https://seeklogo.com/images/S/sevilla-fc-logo-33D4DDEE0B-seeklogo.com.png',
-    strAwayTeamBadge: 'https://seeklogo.com/images/F/fc-barcelona-logo-8B08C9A75E-seeklogo.com.png',
-    strVenue: 'Ramón Sánchez Pizjuán',
-    strLeague: 'La Liga',
+  const target = new Date('2025-07-31T13:00:00+02:00');
+  function update() {
+    const now = new Date(), diff = target - now;
+    const d = Math.max(0, Math.floor(diff / 864e5));
+    const h = String(Math.floor((diff / 36e5) % 24)).padStart(2,'0');
+    const m = String(Math.floor((diff / 6e4) % 60)).padStart(2,'0');
+    const s = String(Math.floor((diff / 1e3) % 60)).padStart(2,'0');
+    document.getElementById('days').textContent = d;
+    document.getElementById('hours').textContent = h;
+    document.getElementById('minutes').textContent = m;
+    document.getElementById('seconds').textContent = s;
   }
-];
-
-async function fetchLiveFixtures() {
-  try {
-    const response = await fetch(API_URL);
-    const contentType = response.headers.get("content-type");
-    if (!contentType || !contentType.includes("application/json")) {
-      throw new Error("Invalid response format");
-    }
-    const data = await response.json();
-    if (!data || !data.events) throw new Error("No events found");
-    return data.events.slice(0, 6);
-  } catch (e) {
-    console.warn("Live fetch failed, using fallback data:", e);
-    return fallbackFixtures;
-  }
-}
-
-function updateCountdown(targetDate) {
-  function tick() {
-    const now = new Date();
-    const diff = targetDate - now;
-    if (diff <= 0) {
-      document.getElementById('days').textContent = '0';
-      document.getElementById('hours').textContent = '00';
-      document.getElementById('minutes').textContent = '00';
-      document.getElementById('seconds').textContent = '00';
-      return;
-    }
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-    document.getElementById('days').textContent = days;
-    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-  }
-  tick();
-  setInterval(tick, 1000);
-}
-
-function safeLogo(url) {
-  // Return default crest if missing/empty
-  if (!url || url.trim() === '') return defaultCrest;
-  return url;
-}
-
-async function initFixturesWidget() {
-  const fixtures = await fetchLiveFixtures();
-  const matchInfo = document.getElementById('match-info');
-  const container = document.getElementById('upcoming-fixtures');
-
-  if (!fixtures || fixtures.length === 0) {
-    matchInfo.textContent = 'No upcoming fixtures found.';
-    container.innerHTML = '';
-    return;
-  }
-
-  // Main fixture (1st)
-  const main = fixtures[0];
-  const homeTeam = main.strHomeTeam;
-  const awayTeam = main.strAwayTeam;
-
-  // Set logos with safe fallback
-  document.getElementById('home-logo').src = safeLogo(main.strHomeTeamBadge);
-  document.getElementById('away-logo').src = safeLogo(main.strAwayTeamBadge);
-
-  const matchDate = new Date(main.dateEvent + 'T' + (main.strTime || '00:00:00'));
-  const formatted = matchDate.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
-  const time = matchDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  const stadium = main.strVenue || 'Unknown Stadium';
-  const competition = main.strLeague || 'Competition';
-  matchInfo.textContent = `${formatted} · ${time} · ${stadium} · ${competition}`;
-
-  updateCountdown(matchDate);
-
-  container.innerHTML = '';
-  // Show next 5 fixtures as opponent boxes
-  fixtures.slice(1, 6).forEach(fx => {
-    const dateObj = new Date(fx.dateEvent);
-    const day = String(dateObj.getDate()).padStart(2, '0');
-    // Determine if Barcelona is home or away in this fixture:
-    const isHome = fx.strHomeTeam.toLowerCase().includes('barcelona');
-    // Show opponent's crest (the other team):
-    const crest = isHome ? safeLogo(fx.strAwayTeamBadge) : safeLogo(fx.strHomeTeamBadge);
-    // League short name fallback:
-    const compName = fx.strLeague?.split(' ')[0] || '';
-
-    const box = document.createElement('div');
-    box.classList.add('opponent-box', isHome ? 'home' : 'away');
-    box.innerHTML = `
-      <img class="crest" src="${crest}" alt="crest" onerror="this.style.display='none'"/>
-      <div class="bottom-strip">
-        <div class="day">${day}</div>
-        <div class="competition-logo">${compName}</div>
-      </div>`;
-    container.appendChild(box);
-  });
-}
-
-initFixturesWidget();
+  update(); setInterval(update, 1000);
 </script>
-</body>
-</html>
+</body></html>
