@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #004d9f 0%, #a50044 100%);
+            background: #000000;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -22,31 +22,48 @@
         }
         
         .fixture-widget {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 32px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            max-width: 480px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             width: 100%;
-            text-align: center;
+            max-width: 900px;
+            display: flex;
+            align-items: center;
+            gap: 32px;
         }
         
-        .tournament-badge {
-            background: linear-gradient(135deg, #FF6B35, #F7931E);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 24px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .tournament-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            justify-content: center;
         }
         
-        .match-container {
-            margin-bottom: 32px;
+        .tournament-logo {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+        }
+        
+        .tournament-name {
+            font-family: 'Georgia', serif;
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 0.5px;
+        }
+        
+        .match-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            flex: 2;
+            max-width: 400px;
         }
         
         .teams {
@@ -54,7 +71,6 @@
             align-items: center;
             justify-content: center;
             gap: 32px;
-            margin-bottom: 24px;
         }
         
         .team {
@@ -65,66 +81,78 @@
         }
         
         .team-logo {
-            width: 80px;
-            height: 80px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #f0f0f0;
-            transition: transform 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
         
         .team-logo:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.3);
         }
         
         .team-name {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+            letter-spacing: 0.5px;
         }
         
         .vs {
-            font-size: 24px;
-            font-weight: 700;
-            color: #666;
-            align-self: center;
+            font-family: 'Georgia', serif;
+            font-size: 14px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
         }
         
         .match-info {
-            margin-bottom: 24px;
+            text-align: center;
         }
         
         .match-date {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 8px;
+            font-family: 'Georgia', serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 6px;
+            font-weight: 400;
         }
         
         .match-time {
-            font-size: 20px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 16px;
+            font-family: 'Georgia', serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: white;
+            letter-spacing: 0.5px;
         }
         
         .countdown {
             background: linear-gradient(135deg, #004d9f, #a50044);
             color: white;
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 32px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            flex: 1;
+            max-width: 240px;
         }
         
         .countdown-title {
-            font-size: 14px;
-            margin-bottom: 12px;
-            opacity: 0.9;
+            font-family: 'Georgia', serif;
+            font-size: 11px;
+            margin-bottom: 8px;
+            opacity: 0.8;
+            text-align: center;
+            font-weight: 400;
+            letter-spacing: 1px;
         }
         
         .countdown-timer {
             display: flex;
             justify-content: center;
-            gap: 16px;
+            gap: 10px;
         }
         
         .time-unit {
@@ -132,84 +160,79 @@
         }
         
         .time-value {
-            font-size: 28px;
-            font-weight: 700;
+            font-family: 'Georgia', serif;
+            font-size: 18px;
+            font-weight: 600;
             display: block;
         }
         
         .time-label {
-            font-size: 12px;
-            opacity: 0.8;
+            font-family: 'Georgia', serif;
+            font-size: 9px;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 400;
+        }
+        
+        .upcoming-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            max-width: 200px;
+        }
+        
+        .upcoming-title {
+            font-family: 'Georgia', serif;
+            font-size: 11px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         
-        .upcoming-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 16px;
-            text-align: left;
-        }
-        
         .upcoming-opponents {
             display: flex;
-            gap: 12px;
-            justify-content: space-between;
+            gap: 6px;
         }
         
         .opponent-badge {
-            flex: 1;
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 12px 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 6px 4px;
             transition: all 0.3s ease;
             cursor: pointer;
+            text-align: center;
+            width: 36px;
         }
         
         .opponent-badge:hover {
-            background: #e9ecef;
+            background: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
         }
         
         .opponent-logo {
-            width: 32px;
-            height: 32px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             object-fit: cover;
-            margin-bottom: 8px;
+            margin-bottom: 3px;
         }
         
         .opponent-name {
-            font-size: 11px;
-            font-weight: 500;
-            color: #666;
+            font-family: 'Georgia', serif;
+            font-size: 8px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.2;
         }
     </style>
 </head>
 <body>
     <div class="fixture-widget">
-        <div class="tournament-badge">La Liga</div>
-        
-        <div class="match-container">
-            <div class="teams">
-                <div class="team">
-                    <img src="https://logos-world.net/wp-content/uploads/2020/06/RCD-Mallorca-Logo.png" alt="RCD Mallorca" class="team-logo">
-                    <div class="team-name">Mallorca</div>
-                </div>
-                <div class="vs">VS</div>
-                <div class="team">
-                    <img src="https://logos-world.net/wp-content/uploads/2020/06/Barcelona-Logo.png" alt="FC Barcelona" class="team-logo">
-                    <div class="team-name">Barcelona</div>
-                </div>
-            </div>
-            
-            <div class="match-info">
-                <div class="match-date">Saturday, August 16, 2025</div>
-                <div class="match-time">19:30 CET</div>
-            </div>
-        </div>
-        
         <div class="countdown">
             <div class="countdown-title">KICKOFF IN</div>
             <div class="countdown-timer">
@@ -232,27 +255,53 @@
             </div>
         </div>
         
-        <div class="upcoming-title">Next 5 Opponents</div>
-        <div class="upcoming-opponents">
-            <div class="opponent-badge">
-                <img src="https://logos-world.net/wp-content/uploads/2020/06/Athletic-Bilbao-Logo.png" alt="Athletic Bilbao" class="opponent-logo">
-                <div class="opponent-name">Athletic</div>
+        <div class="match-section">
+            <div class="tournament-info">
+                <img src="https://logos-world.net/wp-content/uploads/2020/06/La-Liga-Logo.png" alt="La Liga" class="tournament-logo">
+                <span class="tournament-name">La Liga</span>
             </div>
-            <div class="opponent-badge">
-                <img src="https://logoeps.com/wp-content/uploads/2013/03/rayo-vallecano-vector-logo.png" alt="Rayo Vallecano" class="opponent-logo">
-                <div class="opponent-name">Rayo</div>
+            
+            <div class="teams">
+                <div class="team">
+                    <img src="https://logos-world.net/wp-content/uploads/2020/06/RCD-Mallorca-Logo.png" alt="RCD Mallorca" class="team-logo">
+                    <div class="team-name">Mallorca</div>
+                </div>
+                <div class="vs">vs</div>
+                <div class="team">
+                    <img src="https://logos-world.net/wp-content/uploads/2020/06/Barcelona-Logo.png" alt="FC Barcelona" class="team-logo">
+                    <div class="team-name">Barcelona</div>
+                </div>
             </div>
-            <div class="opponent-badge">
-                <img src="https://logos-world.net/wp-content/uploads/2020/06/Real-Valladolid-Logo.png" alt="Real Valladolid" class="opponent-logo">
-                <div class="opponent-name">Valladolid</div>
+            
+            <div class="match-info">
+                <div class="match-date">Saturday, August 16, 2025</div>
+                <div class="match-time">19:30 CET</div>
             </div>
-            <div class="opponent-badge">
-                <img src="https://logos-world.net/wp-content/uploads/2020/06/Girona-FC-Logo.png" alt="Girona FC" class="opponent-logo">
-                <div class="opponent-name">Girona</div>
-            </div>
-            <div class="opponent-badge">
-                <img src="https://logos-world.net/wp-content/uploads/2020/06/Getafe-Logo.png" alt="Getafe CF" class="opponent-logo">
-                <div class="opponent-name">Getafe</div>
+        </div>
+        
+        <div class="upcoming-section">
+            <div class="upcoming-title">Next 5</div>
+            <div class="upcoming-opponents">
+                <div class="opponent-badge">
+                    <img src="https://logos-world.net/wp-content/uploads/2020/06/Athletic-Bilbao-Logo.png" alt="Athletic Bilbao" class="opponent-logo">
+                    <div class="opponent-name">Athletic</div>
+                </div>
+                <div class="opponent-badge">
+                    <img src="https://logoeps.com/wp-content/uploads/2013/03/rayo-vallecano-vector-logo.png" alt="Rayo Vallecano" class="opponent-logo">
+                    <div class="opponent-name">Rayo</div>
+                </div>
+                <div class="opponent-badge">
+                    <img src="https://logos-world.net/wp-content/uploads/2020/06/Real-Valladolid-Logo.png" alt="Real Valladolid" class="opponent-logo">
+                    <div class="opponent-name">Valladolid</div>
+                </div>
+                <div class="opponent-badge">
+                    <img src="https://logos-world.net/wp-content/uploads/2020/06/Girona-FC-Logo.png" alt="Girona FC" class="opponent-logo">
+                    <div class="opponent-name">Girona</div>
+                </div>
+                <div class="opponent-badge">
+                    <img src="https://logos-world.net/wp-content/uploads/2020/06/Getafe-Logo.png" alt="Getafe CF" class="opponent-logo">
+                    <div class="opponent-name">Getafe</div>
+                </div>
             </div>
         </div>
     </div>
