@@ -1,125 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FC Barcelona Widget</title>
+  <title>FC Barcelona Next Fixture Widget</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #F5F7FB;
-      font-family: sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
+    body, html { margin:0; padding:0; width:100%; height:100%; }
+    body { display:flex; justify-content:center; align-items:center; background:#111; }
     .widget {
-      background: white;
-      aspect-ratio: 16 / 9;
-      width: 90%;
-      max-width: 800px;
-      border-radius: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      padding: 20px;
+      position: relative;
+      width: 90vw; max-width: 900px;
+      aspect-ratio: 16/9;
+      background: url('https://...background-image.jpg') center/cover no-repeat;
+      color: #fff;
+      font-family: 'Helvetica Neue', sans-serif;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      padding: 20px;
+      box-sizing: border-box;
     }
-
-    .match-info {
+    .match {
       text-align: center;
     }
-
     .match-logos {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      margin: 10px 0;
+      display: flex; align-items: center; justify-content: center; gap: 30px;
     }
-
-    .match-logos img {
-      height: 80px;
+    .match-logos img { height: 100px; }
+    .vs { font-size: 48px; font-weight: 300; color: #eee; }
+    .info {
+      margin-top: 15px;
+      font-size: 16px;
+      line-height: 1.4;
     }
-
-    .vs {
-      font-size: 36px;
-      font-weight: bold;
-    }
-
-    .details {
-      text-align: center;
-      font-size: 14px;
-      color: #333;
-    }
-
-    .opponents {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .opponents img {
-      width: 32px;
-      height: auto;
-      opacity: 0.9;
-    }
-
     #countdown {
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 20px;
       margin-top: 10px;
-      color: #111;
+      font-weight: bold;
     }
+    .opponents {
+      display: flex; justify-content:center; gap:15px;
+    }
+    .opponents img { width:40px; opacity:0.9; }
   </style>
 </head>
 <body>
   <div class="widget">
-    <div class="match-info">
+    <div class="match">
       <div class="match-logos">
         <img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg" alt="Barcelona">
         <div class="vs">v</div>
-        <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Atalanta_BC_crest.svg" alt="Atalanta">
+        <img src="https://upload.wikimedia.org/wikipedia/en/2/2e/Vissel_Kobe_Logo.svg" alt="Vissel Kobe">
       </div>
-      <div class="details">
-        <div>Date: 29 January 2025</div>
-        <div>Time: 21:00 CET</div>
-        <div>Stadium: Estadi Olímpic Lluís Companys, Barcelona</div>
-        <div>Competition: UEFA Champions League</div>
-        <div id="countdown"></div>
+      <div class="info">
+        Date: 27 July 2025<br>
+        Time: 10:00 AM CEST<br>
+        Stadium: Noevir Kobe Stadium, Kobe<br>
+        Competition: Club Friendly – Asian Tour
       </div>
+      <div id="countdown"></div>
     </div>
-
     <div class="opponents">
-      <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Atalanta_BC_crest.svg" alt="Atalanta">
-      <img src="https://upload.wikimedia.org/wikipedia/en/c/ce/Valencia_CF_logo.svg" alt="Valencia">
-      <img src="https://upload.wikimedia.org/wikipedia/en/2/29/Deportivo_Alav%C3%A9s_logo.svg" alt="Alavés">
-      <img src="https://upload.wikimedia.org/wikipedia/en/7/70/Sevilla_FC_logo.svg" alt="Sevilla">
-      <img src="https://upload.wikimedia.org/wikipedia/en/c/ce/Valencia_CF_logo.svg" alt="Valencia Again">
+      <!-- next opponents: Seoul FC, Daegu FC, Mallorca, Levante, Rayo Vallecano -->
+      <img src="https://upload.wikimedia.org/wikipedia/en/0/0f/FC_Seoul_logo.svg" alt="FC Seoul">
+      <img src="https://upload.wikimedia.org/wikipedia/en/6/6c/Daegu_FC_logo.svg" alt="Daegu FC">
+      <img src="https://upload.wikimedia.org/wikipedia/en/1/1f/RCD_Mallorca_logo.svg" alt="Mallorca">
+      <img src="https://upload.wikimedia.org/wikipedia/en/6/6a/Levante_UD_logo.svg" alt="Levante">
+      <img src="https://upload.wikimedia.org/wikipedia/en/6/6b/Rayo_Vallecano_logo.svg" alt="Rayo Vallecano">
     </div>
   </div>
-
-  <script>
-    const target = new Date("2025-01-29T21:00:00+01:00"); // CET
-    function updateCountdown() {
-      const now = new Date();
-      const diff = target - now;
-      if (diff <= 0) {
-        document.getElementById("countdown").innerText = "Match in progress or finished";
-        return;
-      }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
-      const mins = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
-      const secs = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
-      document.getElementById("countdown").innerText = `Countdown: ${days}d ${hours}:${mins}:${secs}`;
-    }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
+<script>
+  const target = new Date("2025-07-27T10:00:00+02:00");
+  function update() {
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) { document.getElementById("countdown").innerText = "Match in progress or finished"; return; }
+    const d = Math.floor(diff/864e5);
+    const h = String(Math.floor(diff/36e5)%24).padStart(2,'0');
+    const m = String(Math.floor(diff/6e4)%60).padStart(2,'0');
+    const s = String(Math.floor(diff/1e3)%60).padStart(2,'0');
+    document.getElementById("countdown").innerText = `${d}d ${h}:${m}:${s}`;
+  }
+  setInterval(update,1000);
+  update();
+</script>
 </body>
 </html>
