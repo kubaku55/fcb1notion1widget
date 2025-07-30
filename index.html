@@ -1,352 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FC Barcelona - Next Fixture</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #000000;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .fixture-widget {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 900px;
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
-        
-        .tournament-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            justify-content: center;
-        }
-        
-        .tournament-logo {
-            width: 20px;
-            height: 20px;
-            opacity: 0.8;
-        }
-        
-        .tournament-name {
-            font-family: 'Georgia', serif;
-            font-size: 13px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.7);
-            letter-spacing: 0.5px;
-        }
-        
-        .match-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            flex: 2;
-            max-width: 400px;
-        }
-        
-        .teams {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 32px;
-        }
-        
-        .team {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .team-logo {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .team-logo:hover {
-            transform: scale(1.05);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-        
-        .team-name {
-            font-family: 'Georgia', serif;
-            font-size: 16px;
-            font-weight: 500;
-            color: white;
-            letter-spacing: 0.5px;
-        }
-        
-        .vs {
-            font-family: 'Georgia', serif;
-            font-size: 14px;
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 1px;
-        }
-        
-        .match-info {
-            text-align: center;
-        }
-        
-        .match-date {
-            font-family: 'Georgia', serif;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 6px;
-            font-weight: 400;
-        }
-        
-        .match-time {
-            font-family: 'Georgia', serif;
-            font-size: 18px;
-            font-weight: 500;
-            color: white;
-            letter-spacing: 0.5px;
-        }
-        
-        .countdown {
-            background: linear-gradient(135deg, #004d9f, #a50044);
-            color: white;
-            padding: 16px 20px;
-            border-radius: 12px;
-            flex: 1;
-            max-width: 240px;
-        }
-        
-        .countdown-title {
-            font-family: 'Georgia', serif;
-            font-size: 11px;
-            margin-bottom: 8px;
-            opacity: 0.8;
-            text-align: center;
-            font-weight: 400;
-            letter-spacing: 1px;
-        }
-        
-        .countdown-timer {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .time-unit {
-            text-align: center;
-        }
-        
-        .time-value {
-            font-family: 'Georgia', serif;
-            font-size: 18px;
-            font-weight: 600;
-            display: block;
-        }
-        
-        .time-label {
-            font-family: 'Georgia', serif;
-            font-size: 9px;
-            opacity: 0.7;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 400;
-        }
-        
-        .upcoming-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-            max-width: 200px;
-        }
-        
-        .upcoming-title {
-            font-family: 'Georgia', serif;
-            font-size: 11px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.7);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .upcoming-opponents {
-            display: flex;
-            gap: 6px;
-        }
-        
-        .opponent-badge {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 6px 4px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-align: center;
-            width: 36px;
-        }
-        
-        .opponent-badge:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-        
-        .opponent-logo {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 3px;
-        }
-        
-        .opponent-name {
-            font-family: 'Georgia', serif;
-            font-size: 8px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.2;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FC Barcelona Next Match Widget</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #F5F7FB;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .widget {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      max-width: 400px;
+      text-align: center;
+    }
+    .logos img {
+      width: 36px;
+      margin: 5px;
+    }
+    #countdown {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
-    <div class="fixture-widget">
-        <div class="countdown">
-            <div class="countdown-title">KICKOFF IN</div>
-            <div class="countdown-timer">
-                <div class="time-unit">
-                    <span class="time-value" id="days">0</span>
-                    <span class="time-label">Days</span>
-                </div>
-                <div class="time-unit">
-                    <span class="time-value" id="hours">0</span>
-                    <span class="time-label">Hours</span>
-                </div>
-                <div class="time-unit">
-                    <span class="time-value" id="minutes">0</span>
-                    <span class="time-label">Minutes</span>
-                </div>
-                <div class="time-unit">
-                    <span class="time-value" id="seconds">0</span>
-                    <span class="time-label">Seconds</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="match-section">
-            <div class="tournament-info">
-                <img src="https://logos-world.net/wp-content/uploads/2020/06/La-Liga-Logo.png" alt="La Liga" class="tournament-logo">
-                <span class="tournament-name">La Liga</span>
-            </div>
-            
-            <div class="teams">
-                <div class="team">
-                    <img src="https://logos-world.net/wp-content/uploads/2020/06/RCD-Mallorca-Logo.png" alt="RCD Mallorca" class="team-logo">
-                    <div class="team-name">Mallorca</div>
-                </div>
-                <div class="vs">vs</div>
-                <div class="team">
-                    <img src="https://logos-world.net/wp-content/uploads/2020/06/Barcelona-Logo.png" alt="FC Barcelona" class="team-logo">
-                    <div class="team-name">Barcelona</div>
-                </div>
-            </div>
-            
-            <div class="match-info">
-                <div class="match-date">Saturday, August 16, 2025</div>
-                <div class="match-time">19:30 CET</div>
-            </div>
-        </div>
-        
-        <div class="upcoming-section">
-            <div class="upcoming-title">Next 5</div>
-            <div class="upcoming-opponents">
-                <div class="opponent-badge">
-                    <img src="https://logos-world.net/wp-content/uploads/2020/06/Athletic-Bilbao-Logo.png" alt="Athletic Bilbao" class="opponent-logo">
-                    <div class="opponent-name">Athletic</div>
-                </div>
-                <div class="opponent-badge">
-                    <img src="https://logoeps.com/wp-content/uploads/2013/03/rayo-vallecano-vector-logo.png" alt="Rayo Vallecano" class="opponent-logo">
-                    <div class="opponent-name">Rayo</div>
-                </div>
-                <div class="opponent-badge">
-                    <img src="https://logos-world.net/wp-content/uploads/2020/06/Real-Valladolid-Logo.png" alt="Real Valladolid" class="opponent-logo">
-                    <div class="opponent-name">Valladolid</div>
-                </div>
-                <div class="opponent-badge">
-                    <img src="https://logos-world.net/wp-content/uploads/2020/06/Girona-FC-Logo.png" alt="Girona FC" class="opponent-logo">
-                    <div class="opponent-name">Girona</div>
-                </div>
-                <div class="opponent-badge">
-                    <img src="https://logos-world.net/wp-content/uploads/2020/06/Getafe-Logo.png" alt="Getafe CF" class="opponent-logo">
-                    <div class="opponent-name">Getafe</div>
-                </div>
-            </div>
-        </div>
+  <div class="widget">
+    <h2 style="color:#C8102E;">🔵🔴 FC Barcelona – Next Match</h2>
+    <div>
+      <img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg" width="40" style="margin-right:10px;" alt="Barça">
+      <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Atalanta_BC_crest.svg" width="40" alt="Atalanta">
     </div>
+    <h3>vs Atalanta</h3>
+    <p>
+      <strong>Date:</strong> 29 January 2025<br>
+      <strong>Time:</strong> 21:00 CET<br>
+      <strong>Stadium:</strong> Estadi Olímpic Lluís Companys, Barcelona<br>
+      <strong>Competition:</strong> 🏆 UEFA Champions League
+    </p>
+    <p id="countdown"></p>
+    <h4>🔜 Next 5 Opponents</h4>
+    <div class="logos">
+      <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Atalanta_BC_crest.svg" alt="Atalanta">
+      <img src="https://upload.wikimedia.org/wikipedia/en/c/ce/Valencia_CF_logo.svg" alt="Valencia">
+      <img src="https://upload.wikimedia.org/wikipedia/en/2/29/Deportivo_Alav%C3%A9s_logo.svg" alt="Alavés">
+      <img src="https://upload.wikimedia.org/wikipedia/en/7/70/Sevilla_FC_logo.svg" alt="Sevilla">
+      <img src="https://upload.wikimedia.org/wikipedia/en/c/ce/Valencia_CF_logo.svg" alt="Valencia (again)">
+    </div>
+  </div>
 
-    <script>
-        // Set the target date and time for the match
-        const matchDate = new Date('2025-08-16T19:30:00+02:00').getTime();
-        
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const timeLeft = matchDate - now;
-            
-            if (timeLeft > 0) {
-                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                
-                document.getElementById('days').textContent = days.toString().padStart(2, '0');
-                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-            } else {
-                // Match has started or passed
-                document.getElementById('days').textContent = '00';
-                document.getElementById('hours').textContent = '00';
-                document.getElementById('minutes').textContent = '00';
-                document.getElementById('seconds').textContent = '00';
-                document.querySelector('.countdown-title').textContent = 'MATCH STARTED';
-            }
-        }
-        
-        // Update countdown immediately and then every second
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-        
-        // Add some interactive effects
-        document.querySelectorAll('.opponent-badge').forEach(badge => {
-            badge.addEventListener('click', function() {
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = 'translateY(-2px)';
-                }, 150);
-            });
-        });
-    </script>
+  <script>
+    const target = new Date("2025-01-29T21:00:00+01:00"); // CET
+    function updateCountdown() {
+      const now = new Date();
+      const diff = target - now;
+      if (diff <= 0) {
+        document.getElementById("countdown").innerText = "Match in progress or finished";
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+      const mins = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
+      const secs = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+      document.getElementById("countdown").innerText = `${days}d ${hours}:${mins}:${secs}`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
 </body>
 </html>
