@@ -1,215 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>FC Barcelona Upcoming Fixtures Widget</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>FC Barcelona Widget</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
-
-  html, body {
-    margin: 0; padding: 0; height: 100%;
-    background: #111;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
-  }
-  .widget {
-    width: 90vw; max-width: 900px;
-    aspect-ratio: 16/9;
-    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;
-    border-radius: 12px;
-    padding: 20px 20px 16px 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-blend-mode: multiply;
-    background-color: rgba(4, 17, 50, 0.85); /* deep Barca blue overlay */
-    color: #444; /* anthracite grey */
-    user-select: none;
-  }
-  .match {
-    text-align: center;
-    background: rgba(255 255 255 / 0.12);
-    border-radius: 12px;
-    padding: 18px 20px;
-    box-shadow: 0 8px 24px rgb(0 0 0 / 0.3);
-  }
-  .logos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    margin-bottom: 12px;
-  }
-  .logos img {
-    height: 100px;
-    width: auto;
-    filter: drop-shadow(0 0 3px rgba(0,0,0,0.7));
-  }
-  .vs {
-    font-size: 56px;
-    font-weight: 800;
-    color: #a71930; /* Barca garnet */
-    user-select: none;
-  }
-  .info {
-    font-size: 14px;
-    line-height: 1.3;
-    font-weight: 600;
-    margin-top: 8px;
-    color: #888; /* lighter gray for caption style */
-  }
-  #countdown {
-    margin-top: 10px;
-    font-size: 18px;
-    font-weight: 700;
-    color: #a71930; /* Barca garnet */
-  }
-  .opponents {
-    margin-top: 16px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  .opponents img {
-    width: 50px;
-    height: 50px;
-    background: transparent;
-    padding: 4px;
-    border-radius: 6px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 2px rgba(0,0,0,0.6));
-    transition: transform 0.3s ease;
-  }
-  .opponents img:hover {
-    transform: scale(1.2);
-  }
+  html, body { margin:0; padding:0; height:100%; background:#111; font-family:'Poppins',sans-serif; display:flex; justify-content:center; align-items:center; }
+  .widget { width:90vw; max-width:900px; aspect-ratio:16/9; background: linear-gradient(145deg, #0B2447, #A71930); border-radius:12px; padding:20px; box-sizing:border-box; color:#444; }
+  .main { text-align:center; margin-bottom:12px; }
+  .logos { display:flex; justify-content:center; align-items:center; gap:40px; }
+  .logos img { height:100px; filter:drop-shadow(0 0 3px rgba(0,0,0,0.7)); }
+  .vs { font-size:56px; font-weight:800; color:#A71930; }
+  .info { font-size:14px; font-weight:600; color:#555; line-height:1.3; margin-top:8px; }
+  #countdown { font-size:18px; font-weight:700; color:#A71930; margin-top:6px; }
+  .opponents { display:flex; justify-content:center; gap:16px; margin-top:12px; }
+  .opponents img { width:40px; height:40px; object-fit:contain; filter:drop-shadow(0 0 2px rgba(0,0,0,0.6)); }
 </style>
 </head>
 <body>
-  <div class="widget">
-    <div class="match">
-      <div class="logos" id="main-logos">
-        <img src="https://crests.football-data.org/81.png" alt="FC Barcelona" />
-        <div class="vs">v</div>
-        <img src="https://banner2.cleanpng.com/20180717/bxc/kisspng-fc-seoul-suwon-samsung-bluewings-jeju-united-fc-ga-lotto-logo-5b4dfec666c726.359798791531838150421.jpg" alt="FC Seoul" />
-      </div>
-      <div class="info" id="match-info">
-        Date: 31 July 2025<br/>
-        Time: 13:00 CEST (20:00 local)<br/>
-        Stadium: Seoul World Cup Stadium, Seoul<br/>
-        Competition: Club Friendly – Asia Tour
-      </div>
-      <div id="countdown"></div>
+<div class="widget">
+  <div class="main">
+    <div class="logos">
+      <img id="home-logo" src="https://crests.football-data.org/81.png" alt="Home: FC Barcelona"/>
+      <div class="vs">v</div>
+      <img id="away-logo" src="https://banner2.cleanpng.com/20180717/bxc/kisspng-fc-seoul-suwon-samsung-bluewings-jeju-united-fc-ga-lotto-logo-5b4dfec666c726.359798791531838150421.jpg" alt="Away: FC Seoul"/>
     </div>
-    <div class="opponents" id="opponent-logos">
-      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Daegu_FC.svg/1200px-Daegu_FC.svg.png" alt="Daegu FC" />
-      <img src="https://crests.football-data.org/89.png" alt="Mallorca" />
-      <img src="https://crests.football-data.org/88.svg" alt="Levante UD" />
-      <img src="https://crests.football-data.org/92.png" alt="Rayo Vallecano" />
-      <img src="https://crests.football-data.org/90.png" alt="Espanyol" />
+    <div class="info" id="match-info">
+      31 July 2025 · 13:00 CEST – Seoul World Cup Stadium · Asia Tour Friendly
     </div>
+    <div id="countdown"></div>
   </div>
+  <div class="opponents">
+    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Daegu_FC.svg/1200px-Daegu_FC.svg.png" alt="Daegu FC"/>
+    <img src="https://crests.football-data.org/89.png" alt="Mallorca"/>
+    <img src="https://crests.football-data.org/88.svg" alt="Levante UD"/>
+    <img src="https://crests.football-data.org/92.png" alt="Rayo Vallecano"/>
+  </div>
+</div>
 
-  <script>
-    const fixtures = [
-      {
-        date: '2025-07-31T13:00:00+02:00',
-        opponentName: 'FC Seoul',
-        opponentLogo: 'https://banner2.cleanpng.com/20180717/bxc/kisspng-fc-seoul-suwon-samsung-bluewings-jeju-united-fc-ga-lotto-logo-5b4dfec666c726.359798791531838150421.jpg',
-        stadium: 'Seoul World Cup Stadium, Seoul',
-        competition: 'Club Friendly – Asia Tour'
-      },
-      {
-        date: '2025-08-04T12:00:00+02:00',
-        opponentName: 'Daegu FC',
-        opponentLogo: 'https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Daegu_FC.svg/1200px-Daegu_FC.svg.png',
-        stadium: 'Daegu Stadium, Daegu',
-        competition: 'Club Friendly – Asia Tour'
-      },
-      {
-        date: '2025-08-10T15:00:00+02:00',
-        opponentName: 'Mallorca',
-        opponentLogo: 'https://crests.football-data.org/89.png',
-        stadium: 'Visit Mallorca Stadium, Palma',
-        competition: 'La Liga'
-      },
-      {
-        date: '2025-08-17T14:00:00+02:00',
-        opponentName: 'Levante UD',
-        opponentLogo: 'https://crests.football-data.org/88.svg',
-        stadium: 'Ciutat de València Stadium, Valencia',
-        competition: 'La Liga'
-      },
-      {
-        date: '2025-08-24T16:00:00+02:00',
-        opponentName: 'Rayo Vallecano',
-        opponentLogo: 'https://crests.football-data.org/92.png',
-        stadium: 'Vallecas Stadium, Madrid',
-        competition: 'La Liga'
-      },
-      {
-        date: '2025-08-31T16:00:00+02:00',
-        opponentName: 'Espanyol',
-        opponentLogo: 'https://crests.football-data.org/90.png',
-        stadium: 'RCDE Stadium, Barcelona',
-        competition: 'La Liga'
-      }
-    ];
-
-    let currentIndex = 0;
-
-    function updateWidget(index) {
-      const match = fixtures[index];
-      document.querySelector('#main-logos img:nth-child(3)').src = match.opponentLogo;
-      document.querySelector('#main-logos img:nth-child(3)').alt = match.opponentName;
-
-      const dateObj = new Date(match.date);
-      const optionsDate = { day: 'numeric', month: 'long', year: 'numeric' };
-      const optionsTime = { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' };
-
-      document.getElementById('match-info').innerHTML = `
-        Date: ${dateObj.toLocaleDateString('en-GB', optionsDate)}<br/>
-        Time: ${dateObj.toLocaleTimeString('en-GB', optionsTime)}<br/>
-        Stadium: ${match.stadium}<br/>
-        Competition: ${match.competition}
-      `;
-
-      countdownTarget = dateObj;
-      updateCountdown();
+<script>
+  const fixtures = [
+    { date:'2025-07-31T13:00:00+02:00',
+      opponentLogo:'https://banner2.cleanpng.com/20180717/bxc/kisspng-fc-seoul-suwon-samsung-bluewings-jeju-united-fc-ga-lotto-logo-5b4dfec666c726.359798791531838150421.jpg',
+      summary:'31 July 2025 · 13:00 CEST – Seoul World Cup Stadium · Asia Tour Friendly'
+    },
+    { date:'2025-08-04T13:00:00+02:00',
+      opponentLogo:'https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Daegu_FC.svg/1200px-Daegu_FC.svg.png',
+      summary:'4 Aug 2025 · 13:00 CEST – Daegu Stadium · Asia Tour Friendly'
+    },
+    { date:'2025-08-17T14:00:00+02:00',
+      opponentLogo:'https://crests.football-data.org/89.png',
+      summary:'17 Aug 2025 · 14:00 CEST – Visit Mallorca Stadium · La Liga'
+    },
+    { date:'2025-08-23T14:00:00+02:00',
+      opponentLogo:'https://crests.football-data.org/88.svg',
+      summary:'23 Aug 2025 · 14:00 CEST – Ciutat de València Stadium · La Liga'
+    },
+    { date:'2025-08-31T16:00:00+02:00',
+      opponentLogo:'https://crests.football-data.org/92.png',
+      summary:'31 Aug 2025 · 16:00 CEST – Vallecas Stadium · La Liga'
     }
+  ];
 
-    let countdownTarget = new Date(fixtures[0].date);
+  let idx = 0;
+  function updateMatch(){
+    const f = fixtures[idx];
+    document.getElementById('away-logo').src = f.opponentLogo;
+    document.getElementById('match-info').textContent = f.summary;
+    countdownTarget = new Date(f.date);
+  }
 
-    function updateCountdown() {
-      const now = new Date();
-      const diff = countdownTarget - now;
-      const countdownEl = document.getElementById('countdown');
-      if (diff <= 0) {
-        countdownEl.textContent = 'Match in progress or finished';
-        return;
-      }
-      const d = Math.floor(diff / 864e5);
-      const h = String(Math.floor(diff / 36e5) % 24).padStart(2, '0');
-      const m = String(Math.floor(diff / 6e4) % 60).padStart(2, '0');
-      const s = String(Math.floor(diff / 1e3) % 60).padStart(2, '0');
-      countdownEl.textContent = `Countdown: ${d}d ${h}:${m}:${s}`;
-    }
+  let countdownTarget = new Date(fixtures[0].date);
+  function tick(){
+    const diff = countdownTarget - new Date();
+    const el = document.getElementById('countdown');
+    if(diff<=0){ el.textContent='Match in progress or finished'; return; }
+    const d=Math.floor(diff/864e5), h=String(Math.floor(diff/36e5)%24).padStart(2,'0'),
+          m=String(Math.floor(diff/6e4)%60).padStart(2,'0'), s=String(Math.floor(diff/1e3)%60).padStart(2,'0');
+    el.textContent=`${d}d ${h}:${m}:${s}`;
+  }
 
-    function cycleFixtures() {
-      updateWidget(currentIndex);
-      currentIndex = (currentIndex + 1) % fixtures.length;
-    }
-
-    setInterval(() => {
-      cycleFixtures();
-    }, 10000);
-
-    cycleFixtures();
-    setInterval(updateCountdown, 1000);
-  </script>
+  setInterval(tick,1000);
+  // no cycling; stays static until manually updated or game finishes
+  updateMatch();
+</script>
 </body>
 </html>
