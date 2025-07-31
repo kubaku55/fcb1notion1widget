@@ -1,13 +1,33 @@
-export async function handler(event, context) {
-  const response = await fetch('https://api.football-data.org/v4/teams/81/matches', {
-    headers: { 'X-Auth-Token': '05a3bddcc756af1413cbee4d9295cd57' }
-  });
-  if (!response.ok) {
-    return { statusCode: 500, body: 'Failed to fetch fixtures' };
+const fetch = require('node-fetch');
+
+exports.handler = async function(event, context) {
+  const API_KEY = 'YOUR_API_KEY_HERE';  // <-- REPLACE with your actual API key, keep this private!
+
+  // FC Barcelona team ID in API-Football (usually 81)
+  const teamId = 81;
+
+  const url = `https://v3.football.api-sports.io/fixtures?team=${teamId}&next=5`;
+
+  try {
+    const response = await fetch(url, {
+      headers: { 'x-apisports-key': API_KEY }
+    });
+
+    if (!response.ok) {
+      return { statusCode: response.status, body: JSON.stringify({ error: 'Failed to fetch fixtures' }) };
+    }
+
+    const data = await response.json();
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(data)
+    };
+
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message })
+    };
   }
-  const data = await response.json();
-  return {
-    statusCode: 200,
-    body: JSON.stringify(data)
-  };
-}
+};
