@@ -80,106 +80,92 @@
   </div>
 </div>
 <script>
-  const apiKey = '05a3bddcc756af1413cbee4d9295cd57'; // Replace YOUR_API_KEY with your actual API key from API-Football
-  const teamId = 81; // FC Barcelona ID in API-Football
+async function fetchFixtures() {
+  try {
+    const res = await fetch('/.netlify/functions/getFixtures');
+    if (!res.ok) throw new Error('Failed to fetch data');
+    const data = await res.json();
+    const fixtures = data.response;
 
-  // Function to format date to 'DD MMM YYYY · HH:mm CEST'
-  function formatDate(dateString) {
-    const options = { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Europe/Madrid' };
-    const date = new Date(dateString);
-    return date.toLocaleString('en-GB', options).replace(',', ' ·');
-  }
-
-  // Update countdown for the next fixture date
-  function updateCountdown(targetDate) {
-    function update() {
-      const now = new Date();
-      const diff = new Date(targetDate) - now;
-      const d = Math.max(0, Math.floor(diff / 864e5));
-      const h = String(Math.floor((diff / 36e5) % 24)).padStart(2,'0');
-      const m = String(Math.floor((diff / 6e4) % 60)).padStart(2,'0');
-      const s = String(Math.floor((diff / 1e3) % 60)).padStart(2,'0');
-      document.getElementById('days').textContent = d;
-      document.getElementById('hours').textContent = h;
-      document.getElementById('minutes').textContent = m;
-      document.getElementById('seconds').textContent = s;
+    if (!fixtures || fixtures.length === 0) {
+      console.log('No fixtures found');
+      return;
     }
-    update();
-    setInterval(update, 1000);
-  }
 
-  // Function to create or update next 5 fixtures boxes
-  function updateNextFixtures(fixtures) {
-    const container = document.querySelector('.opponents');
-    container.innerHTML = ''; // Clear old fixtures
+    // Clear old matches container, create new dynamic content
+    const opponentsContainer = document.querySelector('.opponents');
+    opponentsContainer.innerHTML = '';
 
     fixtures.forEach(fixture => {
       const home = fixture.teams.home;
       const away = fixture.teams.away;
-      const league = fixture.league;
-      const fixtureDate = new Date(fixture.fixture.date);
-      const dayNum = fixtureDate.getDate().toString().padStart(2, '0');
-      const isHome = (home.id === teamId);
-      const opponent = isHome ? away : home;
-      const box = document.createElement('div');
-      box.className = 'opponent-box ' + (isHome ? 'home' : 'away');
+      const dateObj = new Date(fixture.fixture.date);
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      const competition = fixture.league.name;
 
-      box.innerHTML = `
-        <img class="crest" src="${opponent.logo}" alt="${opponent.name}" />
-        <div class="bottom-strip">
-          <div class="day">${dayNum}</div>
-          <img class="competition-logo" src="${league.logo}" alt="${league.name}" />
-        </div>
-      `;
-      container.appendChild(box);
+      // Create opponent box element, home team on left, away team on right
+      const opponentBox = document.createElement('div');
+      opponentBox.classList.add('opponent-box');
+      opponentBox.style.display = 'flex';
+      opponentBox.style.justifyContent = 'space-between';
+      opponentBox.style.marginBottom = '10px';
+
+      // Home team box
+      const homeDiv = document.createElement('div');
+      homeDiv.classList.add('home');
+      homeDiv.style.textAlign = 'center';
+      homeDiv.style.width = '48%';
+
+      const homeImg = document.createElement('img');
+      homeImg.src = home.logo || home.image || ''; // API might have logo or image URL
+      homeImg.alt = home.name;
+      homeImg.style.width = '54px';
+      homeImg.style.height = '54px';
+      homeImg.style.objectFit = 'contain';
+
+      const homeName = document.createElement('div');
+      homeName.textContent = home.name;
+      homeName.style.color = '#fff';
+      homeName.style.fontSize = '12px';
+
+      homeDiv.appendChild(homeImg);
+      homeDiv.appendChild(homeName);
+
+      // Away team box
+      const awayDiv = document.createElement('div');
+      awayDiv.classList.add('away');
+      awayDiv.style.textAlign = 'center';
+      awayDiv.style.width = '48%';
+
+      const awayImg = document.createElement('img');
+      awayImg.src = away.logo || away.image || '';
+      awayImg.alt = away.name;
+      awayImg.style.width = '54px';
+      awayImg.style.height = '54px';
+      awayImg.style.objectFit = 'contain';
+
+      const awayName = document.createElement('div');
+      awayName.textContent = away.name;
+      awayName.style.color = '#fff';
+      awayName.style.fontSize = '12px';
+
+      awayDiv.appendChild(awayImg);
+      awayDiv.appendChild(awayName);
+
+      opponentBox.appendChild(homeDiv);
+      opponentBox.appendChild(awayDiv);
+
+      opponentsContainer.appendChild(opponentBox);
     });
+
+  } catch (error) {
+    console.error('Error fetching fixtures:', error);
   }
+}
 
-  // Main fetch and update function
-  async function fetchAndUpdate() {
-    try {
-      const response = await fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?team=${teamId}&next=5`, {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Key': apiKey,
-          'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
-        }
-      });
-      const data = await response.json();
-      if(!data.response || data.response.length === 0) {
-        console.error('No fixtures found');
-        return;
-      }
-
-      // Next fixture is first in the list
-      const nextFixture = data.response[0];
-      const home = nextFixture.teams.home;
-      const away = nextFixture.teams.away;
-      const fixtureDate = nextFixture.fixture.date;
-      const league = nextFixture.league;
-
-      // Update main fixture logos
-      document.getElementById('home-logo').src = home.logo;
-      document.getElementById('home-logo').alt = home.name;
-      document.getElementById('away-logo').src = away.logo;
-      document.getElementById('away-logo').alt = away.name;
-
-      // Update match info text (date · stadium · competition)
-      const stadium = nextFixture.fixture.venue.name || '';
-      document.getElementById('match-info').textContent = `${formatDate(fixtureDate)} · ${stadium} · ${league.name}`;
-
-      // Update countdown
-      updateCountdown(fixtureDate);
-
-      // Update next 5 fixtures boxes
-      updateNextFixtures(data.response);
-
-    } catch (error) {
-      console.error('Error fetching fixtures:', error);
-    }
-  }
-
-  fetchAndUpdate();
+// Run on page load
+fetchFixtures();
 </script>
+
 
 </body></html>
