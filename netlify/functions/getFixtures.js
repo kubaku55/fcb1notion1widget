@@ -1,10 +1,10 @@
 const fetch = require('node-fetch');
 
 exports.handler = async function(event, context) {
-  const API_KEY = 'YOUR_API_KEY_HERE';  // <-- REPLACE with your actual API key, keep this private!
+  const API_KEY = '05a3bddcc756af1413cbee4d9295cd57';  // <-- REPLACE with your actual API key, keep this private!
 
   // FC Barcelona team ID in API-Football (usually 81)
-  const teamId = 81;
+  const teamId = 529;
 
   const url = `https://v3.football.api-sports.io/fixtures?team=${teamId}&next=5`;
 
