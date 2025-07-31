@@ -1,33 +1,35 @@
-const fetch = require('node-fetch');
+// getFixtures.js (Netlify function)
+import fetch from 'node-fetch';
 
-exports.handler = async function(event, context) {
-  const API_KEY = '05a3bddcc756af1413cbee4d9295cd57';  // <-- REPLACE with your actual API key, keep this private!
-
-  // FC Barcelona team ID in API-Football (usually 81)
-  const teamId = 529;
-
-  const url = `https://v3.football.api-sports.io/fixtures?team=${teamId}&next=5`;
+export async function handler() {
+  const teamId = 529; // Barcelona team ID
+  const url = `https://api-football-v1.p.rapidapi.com/v3/fixtures?team=${teamId}&next=5`;
 
   try {
     const response = await fetch(url, {
-      headers: { 'x-apisports-key': API_KEY }
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': process.env.API_FOOTBALL_KEY, // Your API key as env var
+        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
+      },
     });
 
     if (!response.ok) {
-      return { statusCode: response.status, body: JSON.stringify({ error: 'Failed to fetch fixtures' }) };
+      return {
+        statusCode: response.status,
+        body: JSON.stringify({ error: 'API request failed' }),
+      };
     }
 
     const data = await response.json();
-
     return {
       statusCode: 200,
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     };
-
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message })
+      body: JSON.stringify({ error: error.message }),
     };
   }
-};
+}
