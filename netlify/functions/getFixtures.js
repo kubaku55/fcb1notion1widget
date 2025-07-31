@@ -1,7 +1,6 @@
-// getFixtures.js (Netlify function)
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
 
-export async function handler() {
+exports.handler = async function(event, context) {
   const teamId = 529; // Barcelona team ID
   const url = `https://api-football-v1.p.rapidapi.com/v3/fixtures?team=${teamId}&next=5`;
 
@@ -9,7 +8,7 @@ export async function handler() {
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': process.env.API_FOOTBALL_KEY, // Your API key as env var
+        'X-RapidAPI-Key': process.env.API_FOOTBALL_KEY,
         'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
       },
     });
@@ -32,4 +31,4 @@ export async function handler() {
       body: JSON.stringify({ error: error.message }),
     };
   }
-}
+};
