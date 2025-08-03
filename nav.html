@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+	<!-- Google Font -->
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+
+	<!-------->
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+
+
+		.navMenu {
+			font-family: 'Advent Pro', sans-serif;
+			padding: 8px;
+			text-align: center;
+			margin: 7px auto;
+			width: fit-content;
+		}
+
+		.navMenu a {
+			color: #272727;
+			text-decoration: none;
+			text-transform: uppercase;
+			display: inline-block;
+			padding: 6px;
+		}
+
+		.background {
+			background-color: #ece5f0;
+		}
+
+		.border {
+			border: 1px solid #cccccc;
+
+		}
+
+		.navMenu a:hover {
+
+			color: #d09c0b;
+		}
+	</style>
+</head>
+
+<body>
+
+	<nav class="navMenu  border">
+		<a id="library" onclick="navigate(this.id)" href="#"> <img src=""></i> The great library of Alexandria </a>
+		
+<a id="stuff" onclick="navigate(this.id)" href="#">
+  <img src="https://img.notionusercontent.com/s3/prod-files-secure%2F3cb1befe-514a-46ce-af73-100773a2735e%2Ff3019b72-da21-48b0-b3cc-5fb6705b5456%2Fimages-removebg-preview.png/freeze?exp=1754262172&sig=bpr1p0ZY_b0gvAJ4IHujzSlxAZIS1GLP5-Ar1ZrZQfs&id=23c636d5-db81-80ea-84fb-e97999ccfd43&table=block&userId=e57aa801-0228-43fe-b5ea-f0f29f6902b5" alt="Stuff Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;"> Ferb, I know what we’re gonna do today </a>
+
+
+
+
+	</nav>
+
+
+	<script>
+
+		let direction = "horizontal";
+		if (direction === "vertical") {
+			document.head.insertAdjacentHTML("beforeend", `<style>.navMenu a {display: block; text-align:left; margin:7px} i{width:15px; margin-right:5px} .navMenu{margin:3px}</style>`)
+		}
+
+
+		function navigate(id) {
+
+			if (id == 'library')
+				window.open("https://www.notion.so/The-great-library-of-Alexandria-c76f1b65a6e74b27b5417d79859f59fd", '_blank').focus();
+			else if (id == "stuff")
+				window.open("https://www.notion.so/Ferb-I-know-what-we-re-gonna-do-today-23c636d5db8180ea84fbe97999ccfd43", '_blank').focus();
+
+
+		}
+	</script>
+
+
+</body>
+
+</html>
